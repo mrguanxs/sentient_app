@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sentient_app/pages/home/home.dart';
+import 'package:sentient_app/pages/home/register.dart';
 
 class LoginPage extends StatefulWidget{
 
@@ -99,6 +101,12 @@ class _LoginPageState extends State<LoginPage>{
                   if((_formKey.currentState as FormState).validate()){
                     //todo 登录请求
                     print('登录');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return MyHomePage(title: 'Home',);
+                        })
+                    );
                   }
                 },
               ),
@@ -114,9 +122,15 @@ class _LoginPageState extends State<LoginPage>{
                   '注册账号',
                   style: TextStyle(color: Colors.black54),
                 ),
-                onPressed: (){
+                onPressed: () async {
                   //todo 注册页面
                   print('注册');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context){
+                        return RegisterPage();
+                      })
+                  );
                 },
               ),
             ),
