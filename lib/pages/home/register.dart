@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sentient_app/api/apis.dart';
+import 'package:sentient_app/entity/entity.dart';
+import 'package:sentient_app/pages/home/login.dart';
 
 class RegisterPage extends StatefulWidget{
 
@@ -9,10 +12,12 @@ class RegisterPage extends StatefulWidget{
 }
 
 class _RegisterPageState extends State<RegisterPage>{
-
+  final GlobalKey _formKey= new GlobalKey<FormState>();
+  TextEditingController _usernameController =  TextEditingController();
+  TextEditingController _passwordController =  TextEditingController();
+  TextEditingController _emailController =  TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final GlobalKey _formKey= new GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(title: Text('注册')),
       body: Container(
@@ -26,6 +31,7 @@ class _RegisterPageState extends State<RegisterPage>{
                     //用户名
                     TextFormField(
                       autofocus: false,
+                      controller: _usernameController,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -46,6 +52,7 @@ class _RegisterPageState extends State<RegisterPage>{
                     SizedBox(height: 20),
                     TextFormField(
                       autofocus: false,
+                      controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -68,6 +75,7 @@ class _RegisterPageState extends State<RegisterPage>{
                     TextFormField(
                       obscureText: true,
                       autofocus: false,
+                      controller: _passwordController,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
@@ -101,17 +109,35 @@ class _RegisterPageState extends State<RegisterPage>{
                   '注册',
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
-                onPressed: (){
-                  if((_formKey.currentState as FormState).validate()){
-                    //todo 注册请求
-                    print('注册');
-                  }
-                },
+                onPressed: _onRegister
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onRegister() async {
+    //验证表单
+    if((_formKey.currentState as FormState).validate()){
+      //登录请求
+      UserInfoEntity user;
+      try{
+        print('发起注册');
+        user = await AuthApi.register(_usernameController.text, _emailController.text, _passwordController.text);
+        print('user' + user.toString());
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context){
+              return LoginPage();
+            })
+        );
+      }catch(e){
+        print('注册失败');
+      }finally{
+        print('注册结束');
+      }
+    }
   }
 }

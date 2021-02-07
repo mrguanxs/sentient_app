@@ -33,9 +33,9 @@ class HttpUtil {
     BaseOptions options = BaseOptions(
       baseUrl: getBaseApiUrl(),
       //连接服务器超时时间，单位是毫秒.
-      connectTimeout: 5000,
+      connectTimeout: 50000,
       // 响应流上前后两次接受到数据的间隔，单位为毫秒。
-      receiveTimeout: 3000,
+      receiveTimeout: 30000,
       // Http请求头.
       headers: {},
 
@@ -78,9 +78,9 @@ class HttpUtil {
 
   Dio dio;
 
-  getBaseApiUrl(){
-    return SERVER_API_URL;
-  }
+//  getBaseApiUrl(){
+//    return SERVER_API_URL;
+//  }
 
 
   /*
@@ -261,10 +261,8 @@ class HttpUtil {
   Future get(String path,
       {dynamic params, Options options, CancelToken cancelToken}) async {
     try {
-
       print('\n\n\nSTART GET\n\n\n');
       DateTime startTime = DateTime.now();
-
 
       print("options is:");
       print(options.toString());

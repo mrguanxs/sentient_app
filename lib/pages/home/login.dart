@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sentient_app/api/apis.dart';
+import 'package:sentient_app/entity/entity.dart';
 import 'package:sentient_app/pages/home/home.dart';
 import 'package:sentient_app/pages/home/register.dart';
 
@@ -12,6 +14,9 @@ class LoginPage extends StatefulWidget{
 
 class _LoginPageState extends State<LoginPage>{
   final GlobalKey _formKey= new GlobalKey<FormState>();
+
+  TextEditingController _usernameController =  TextEditingController();
+  TextEditingController _passwordController =  TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +36,7 @@ class _LoginPageState extends State<LoginPage>{
                     TextFormField(
                       autofocus: false,
                       keyboardType: TextInputType.name,
+                      controller: _usernameController,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10
@@ -53,6 +59,7 @@ class _LoginPageState extends State<LoginPage>{
                     TextFormField(
                       obscureText: true,
                       autofocus: false,
+                      controller: _passwordController,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -97,18 +104,7 @@ class _LoginPageState extends State<LoginPage>{
                   '登录',
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
-                onPressed: (){
-                  if((_formKey.currentState as FormState).validate()){
-                    //todo 登录请求
-                    print('登录');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context){
-                          return MyHomePage(title: 'Home',);
-                        })
-                    );
-                  }
-                },
+                onPressed: _onLogin,
               ),
             ),
             Container(
@@ -139,4 +135,29 @@ class _LoginPageState extends State<LoginPage>{
       ),
     );
   }
+
+ void _onLogin() async {
+    //验证表单
+   if((_formKey.currentState as FormState).validate()){
+     //登录请求
+     UserInfoEntity user;
+     try{
+       print('发起登录');
+       user = await AuthApi.pwdLogin(_usernameController.text, _passwordController.text);
+       print('user' + user.toString());
+       Navigator.push(
+           context,
+           MaterialPageRoute(builder: (context){
+             return MyHomePage(title: 'Home',);
+           })
+       );
+     }catch(e){
+       print('登录失败');
+     }finally{
+       print('登录结束');
+     }
+   }
+  }
+
+
 }
