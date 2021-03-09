@@ -66,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage>{
                       validator: (value){
                         RegExp reg = new RegExp(r'^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$');
                         if(!reg.hasMatch(value)){
-                          return '请输入邮箱';
+                          return '请输入正确的邮箱';
                         }
                         return null;
                       },

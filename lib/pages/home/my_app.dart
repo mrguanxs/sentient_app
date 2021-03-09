@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sentient_app/component/loading.dart';
 import 'package:sentient_app/pages/home/home.dart';
 import 'package:sentient_app/tool/cache_tool.dart';
 

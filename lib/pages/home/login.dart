@@ -15,7 +15,6 @@ class LoginPage extends StatefulWidget{
 
 class _LoginPageState extends State<LoginPage>{
   final GlobalKey _formKey= new GlobalKey<FormState>();
-  var _isLoading = false;
 
   TextEditingController _usernameController =  TextEditingController();
   TextEditingController _passwordController =  TextEditingController();
@@ -135,11 +134,6 @@ class _LoginPageState extends State<LoginPage>{
                 },
               ),
             ),
-//            Visibility(
-//              visible: _isLoading,
-//                child: Center(
-//                  child: CircularProgressIndicator(),
-//                ))
           ],
         ),
       ),
@@ -150,7 +144,6 @@ class _LoginPageState extends State<LoginPage>{
     //验证表单
    if((_formKey.currentState as FormState).validate()){
      //登录请求
-     _isLoading = true;
      UserInfoEntity user;
      try{
        print('发起登录');
@@ -159,14 +152,13 @@ class _LoginPageState extends State<LoginPage>{
        Navigator.push(
            context,
            MaterialPageRoute(builder: (context){
-             return MyHomePage(title: 'Home',);
+             return MyHomePage(title: user.username,);
            })
        );
      }catch(e){
        print('登录失败');
      }finally{
        print('登录结束');
-       _isLoading = false;
      }
    }
   }
