@@ -1,6 +1,7 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:sentient_app/component/loading.dart';
 import 'package:sentient_app/config/server.dart';
 import 'package:sentient_app/tool/error_entity.dart';
 
@@ -52,6 +53,7 @@ class HttpUtil {
         onRequest:(RequestOptions options) async {
           print("请求之前");
           print(options.uri);
+          Loading.before(options.uri);
           // 在请求被发送之前做一些事情
           return options; //continue
           // 如果你想完成请求并返回一些自定义数据，可以返回一个`Response`对象或返回`dio.resolve(data)`。
@@ -63,12 +65,14 @@ class HttpUtil {
         onResponse:(Response response) async {
           // 在返回响应数据之前做一些预处理
           print("响应之前");
+          Loading.complete(response.request.uri);
           return response; // continue
         },
         onError: (DioError e) async {
           // 当请求失败时做一些预处理
           print("请求失败之前");
           print(e);
+          Loading.complete(e.request.uri);
           return e;//continue
         }
     ));

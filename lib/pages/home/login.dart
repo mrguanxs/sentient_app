@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sentient_app/api/apis.dart';
+import 'package:sentient_app/component/loading.dart';
 import 'package:sentient_app/entity/entity.dart';
 import 'package:sentient_app/pages/home/home.dart';
 import 'package:sentient_app/pages/home/register.dart';
@@ -14,12 +15,16 @@ class LoginPage extends StatefulWidget{
 
 class _LoginPageState extends State<LoginPage>{
   final GlobalKey _formKey= new GlobalKey<FormState>();
+  var _isLoading = false;
 
   TextEditingController _usernameController =  TextEditingController();
   TextEditingController _passwordController =  TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    print('home  $context');
+    print('home  ${Navigator.of(context)}');
+    Loading.ctx = context;//注入context
     return Scaffold(
       appBar: AppBar(title: Text('登录')),
       body: Container(
@@ -130,6 +135,11 @@ class _LoginPageState extends State<LoginPage>{
                 },
               ),
             ),
+//            Visibility(
+//              visible: _isLoading,
+//                child: Center(
+//                  child: CircularProgressIndicator(),
+//                ))
           ],
         ),
       ),
@@ -140,6 +150,7 @@ class _LoginPageState extends State<LoginPage>{
     //验证表单
    if((_formKey.currentState as FormState).validate()){
      //登录请求
+     _isLoading = true;
      UserInfoEntity user;
      try{
        print('发起登录');
@@ -155,6 +166,7 @@ class _LoginPageState extends State<LoginPage>{
        print('登录失败');
      }finally{
        print('登录结束');
+       _isLoading = false;
      }
    }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sentient_app/component/loading.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -34,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+//    Loading.ctx = context;//注入context
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
