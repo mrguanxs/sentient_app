@@ -3,7 +3,7 @@ import 'package:sentient_app/api/apis.dart';
 import 'package:sentient_app/component/loading.dart';
 import 'package:sentient_app/entity/entity.dart';
 import 'package:sentient_app/pages/home/home.dart';
-import 'package:sentient_app/pages/home/register.dart';
+import 'package:sentient_app/pages/auth/register.dart';
 
 class LoginPage extends StatefulWidget{
 

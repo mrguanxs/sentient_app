@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sentient_app/pages/home/tabs/001chat.dart';
+import 'package:sentient_app/pages/home/tabs/002contact.dart';
+import 'package:sentient_app/pages/home/tabs/003community.dart.dart';
+import 'package:sentient_app/pages/home/tabs/004my.dart.dart';
 import 'package:sentient_app/pages/home/my_drawer.dart';
-import 'package:sentient_app/pages/home/register.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -13,6 +16,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  final List<Widget> _tabBodies = [
+    ChatPage(),
+    ContactPage(),
+    CommunityPage(),
+    MyPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: MyDrawer(),
       bottomNavigationBar: BottomNavigationBar( //底部导航栏
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.chat_rounded), label: '聊天'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat_rounded), label: '聊天',),
           BottomNavigationBarItem(icon: Icon(Icons.people_rounded), label: '好友'),
           BottomNavigationBarItem(icon: Icon(Icons.apartment_rounded), label: '社区'),
           BottomNavigationBarItem(icon: Icon(Icons.account_box_rounded), label: '我的'),
@@ -35,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
+      body: _tabBodies[_selectedIndex],
 //      floatingActionButton: FloatingActionButton(
 //        onPressed: _onAdd,
 //        tooltip: 'Increment',

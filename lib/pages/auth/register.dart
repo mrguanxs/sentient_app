@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sentient_app/api/apis.dart';
 import 'package:sentient_app/entity/entity.dart';
-import 'package:sentient_app/pages/home/login.dart';
+import 'package:sentient_app/pages/auth/login.dart';
 
 class RegisterPage extends StatefulWidget{
 
